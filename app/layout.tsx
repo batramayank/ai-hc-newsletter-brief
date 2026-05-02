@@ -101,10 +101,8 @@ const websiteSchema = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
-      <head>
+      <body className="font-sans bg-paper text-ink min-h-screen flex flex-col" suppressHydrationWarning>
         <JsonLd data={[organizationSchema, websiteSchema]} />
-      </head>
-      <body className="font-sans bg-paper text-ink min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

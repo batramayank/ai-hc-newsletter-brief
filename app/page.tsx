@@ -16,11 +16,51 @@ export default async function HomePage() {
 
   if (issues.length === 0) {
     return (
-      <div className="max-w-2xl mx-auto px-6 py-24 text-center animate-fade">
-        <p className="eyebrow mb-4">No issues yet</p>
-        <h2 className="font-sans font-bold text-3xl mb-4 text-ink">The presses are warm.</h2>
-        <p className="text-ink-soft">
-          Once your n8n workflow inserts its first issue into Supabase, it&apos;ll appear here.
+      <div className="max-w-2xl mx-auto px-6 py-20 md:py-28 animate-fade">
+        {/* Launch label */}
+        <p className="eyebrow text-accent mb-6">Launching soon</p>
+
+        {/* Headline */}
+        <h1 className="font-sans font-bold text-3xl md:text-5xl text-ink leading-tight tracking-tight mb-6">
+          The weekly briefing on AI in healthcare — starting Monday.
+        </h1>
+
+        {/* Description */}
+        <p className="text-ink-soft text-base md:text-lg leading-relaxed mb-10 max-w-xl">
+          Clinical AI, regulation, funding, and what it means for providers,
+          payers, and patients. One concise email every Monday at 10am ET.
+          Free.
+        </p>
+
+        {/* Subscribe CTA */}
+        <Link
+          href="/subscribe"
+          className="inline-block px-7 py-3.5 bg-accent text-white font-mono text-xs uppercase tracking-eyebrow hover:bg-accent-bright transition-colors duration-300 rounded-sm"
+        >
+          Subscribe — it&apos;s free →
+        </Link>
+
+        {/* Divider */}
+        <div className="border-t border-rule mt-16 mb-12" />
+
+        {/* What to expect */}
+        <p className="eyebrow text-ink-faint mb-6">What each issue covers</p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          {[
+            { label: 'Clinical AI', desc: 'Tools entering the clinical workflow — diagnostics, documentation, decision support.' },
+            { label: 'Regulation', desc: 'FDA clearances, CMS guidance, state-level policy moves.' },
+            { label: 'Funding & M&A', desc: 'Who raised, who acquired, and what it signals.' },
+            { label: 'Admin & RCM', desc: 'AI in coding, prior auth, staffing, and revenue cycle.' },
+          ].map(({ label, desc }) => (
+            <div key={label} className="border border-rule rounded-sm p-4">
+              <p className="font-sans font-semibold text-sm text-ink mb-1">{label}</p>
+              <p className="text-ink-soft text-sm leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-10 text-xs text-ink-faint">
+          No spam. Unsubscribe any time. Curated with AI, edited by humans.
         </p>
       </div>
     );
