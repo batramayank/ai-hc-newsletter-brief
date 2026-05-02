@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="AI Healthcare Brief">
+  <title>AI Healthcare Brief</title>
+  <!-- Outer ring -->
+  <circle cx="60" cy="60" r="54" fill="none" stroke="#0D9488" stroke-width="2.5"/>
+
+  <!-- ECG pulse line entering from left -->
+  <path d="M 14 60 L 32 60 L 38 60 L 42 48 L 46 72 L 50 34 L 54 60 L 66 60"
+        fill="none" stroke="#0D9488" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Network connectors from central node to 3 outer nodes -->
+  <line x1="66" y1="60" x2="84" y2="42" stroke="#0F766E" stroke-width="1.75" stroke-linecap="round"/>
+  <line x1="66" y1="60" x2="98" y2="60" stroke="#0F766E" stroke-width="1.75" stroke-linecap="round"/>
+  <line x1="66" y1="60" x2="84" y2="78" stroke="#0F766E" stroke-width="1.75" stroke-linecap="round"/>
+  <line x1="84" y1="42" x2="98" y2="60" stroke="#0F766E" stroke-width="1.75" stroke-linecap="round"/>
+  <line x1="84" y1="78" x2="98" y2="60" stroke="#0F766E" stroke-width="1.75" stroke-linecap="round"/>
+
+  <!-- Nodes -->
+  <circle cx="66" cy="60" r="4" fill="#0D9488"/>
+  <circle cx="84" cy="42" r="4" fill="#0D9488"/>
+  <circle cx="84" cy="78" r="4" fill="#0D9488"/>
+  <circle cx="98" cy="60" r="5" fill="#0F766E"/>
+</svg>

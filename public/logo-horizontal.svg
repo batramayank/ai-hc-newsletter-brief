@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" role="img" aria-label="AI Healthcare Brief">
+  <title>AI Healthcare Brief</title>
+
+  <!-- ===== MARK ===== -->
+  <g transform="translate(20, 20)">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#0D9488" stroke-width="2.5"/>
+    <path d="M 8 50 L 24 50 L 30 50 L 33 39 L 37 62 L 40 26 L 44 50 L 56 50"
+          fill="none" stroke="#0D9488" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="56" y1="50" x2="72" y2="34" stroke="#0F766E" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="56" y1="50" x2="84" y2="50" stroke="#0F766E" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="56" y1="50" x2="72" y2="66" stroke="#0F766E" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="72" y1="34" x2="84" y2="50" stroke="#0F766E" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="72" y1="66" x2="84" y2="50" stroke="#0F766E" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="56" cy="50" r="3.5" fill="#0D9488"/>
+    <circle cx="72" cy="34" r="3.5" fill="#0D9488"/>
+    <circle cx="72" cy="66" r="3.5" fill="#0D9488"/>
+    <circle cx="84" cy="50" r="4.5" fill="#0F766E"/>
+  </g>
+
+  <!-- Vertical divider -->
+  <line x1="140" y1="32" x2="140" y2="108" stroke="#CBD5E1" stroke-width="1"/>
+
+  <!-- ===== WORDMARK ===== -->
+  <text x="160" y="72" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="#0F172A">
+    <tspan fill="#0D9488">AI</tspan> Healthcare
+  </text>
+  <text x="160" y="100" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#475569" letter-spacing="5">BRIEF</text>
+</svg>

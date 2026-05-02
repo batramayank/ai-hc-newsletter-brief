@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background: #FFFFFF;
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: #FFFFFF;
+  }
+  ::selection {
+    background: #0D9488;
+    color: #FFFFFF;
+  }
+}
+
+@layer components {
+  /* Eyebrow / metadata text */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-eyebrow text-ink-soft;
+  }
+
+  /* Animated underline link */
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Category pill — structural only; color classes added dynamically via getCategoryColor() */
+  .category-pill {
+    @apply font-mono text-[0.68rem] uppercase tracking-eyebrow inline-flex items-center
+           px-2.5 py-1 rounded-sm;
+  }
+
+  /* Issue body — neutralizes inline email styles and applies our typography */
+  .issue-body {
+    @apply font-sans text-[1.0625rem] leading-[1.75] text-ink;
+  }
+  .issue-body * {
+    font-family: inherit !important;
+    max-width: none !important;
+  }
+  .issue-body > div,
+  .issue-body > div > * {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  /* Hide the email body's h1 + intro p — already rendered in the page header */
+  .issue-body > h1:first-child,
+  .issue-body > div > h1:first-child {
+    display: none;
+  }
+  .issue-body > h1:first-child + p,
+  .issue-body > div > h1:first-child + p {
+    display: none;
+  }
+  .issue-body h1 {
+    @apply font-display text-3xl md:text-4xl font-bold leading-tight mb-6 mt-0 text-ink;
+  }
+  .issue-body h2 {
+    @apply font-display text-2xl md:text-[1.75rem] font-semibold leading-snug mt-12 mb-4 pb-2 border-b border-rule text-ink;
+    letter-spacing: -0.01em;
+  }
+  .issue-body h3 {
+    @apply font-display text-xl font-semibold mt-8 mb-2 text-ink;
+    line-height: 1.35;
+  }
+  /* Article title links — dark, teal on hover */
+  .issue-body h3 a {
+    color: #111827 !important;
+    text-decoration: none;
+    background-image: linear-gradient(to right, #0D9488, #0D9488);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.4s cubic-bezier(0.65, 0, 0.35, 1), color 0.3s;
+  }
+  .issue-body h3 a:hover {
+    color: #0D9488 !important;
+    background-size: 100% 1px;
+  }
+  .issue-body p {
+    @apply my-3;
+  }
+  /* All links (e.g. "Read the source →") — blue */
+  .issue-body a {
+    color: #2563EB !important;
+    text-decoration: none;
+  }
+  .issue-body a:hover {
+    text-decoration: underline;
+  }
+  /* "Why it matters:" — italic teal, matching the newsletter */
+  .issue-body em {
+    @apply italic font-sans text-[1.0625rem] block mt-4 mb-1;
+    color: #0D9488 !important;
+    font-style: italic;
+  }
+  .issue-body em + br {
+    display: none;
+  }
+  .issue-body hr {
+    @apply my-10 border-rule;
+  }
+  /* Newsletter images in the body */
+  .issue-body img {
+    @apply w-full rounded-sm my-4;
+  }
+}
+
+@layer utilities {
+  .animate-rise {
+    animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade {
+    animation: fade 1s ease-out backwards;
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
