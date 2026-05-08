@@ -91,14 +91,9 @@ export default async function TopicPage({
                     .filter((c) => c !== categoryName)
                     .slice(0, 2)
                     .map((cat) => (
-                      <Link
-                        key={cat}
-                        href={`/topics/${categoryToSlug(cat)}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className={`category-pill ${getCategoryColor(cat)} hover:opacity-80 transition-opacity`}
-                      >
+                      <span key={cat} className={`category-pill ${getCategoryColor(cat)}`}>
                         {cat}
-                      </Link>
+                      </span>
                     ))}
                 </div>
               </Link>
