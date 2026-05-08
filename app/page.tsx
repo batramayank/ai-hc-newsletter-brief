@@ -3,7 +3,8 @@ import {
   getAllIssues,
   formatLongDate,
   formatShortDate,
-  flattenCategories
+  flattenCategories,
+  categoryToSlug
 } from '@/lib/supabase';
 import { getCategoryColor } from '@/lib/utils';
 import JsonLd from '@/components/JsonLd';
@@ -123,7 +124,7 @@ export default async function HomePage() {
             {flattenCategories(latest.categories).length > 0 && (
               <div className="mt-6 flex flex-wrap gap-2">
                 {flattenCategories(latest.categories).map((cat) => (
-                  <span key={cat} className={`category-pill ${getCategoryColor(cat)}`}>{cat}</span>
+                  <Link key={cat} href={`/topics/${categoryToSlug(cat)}`} className={`category-pill ${getCategoryColor(cat)} hover:opacity-80 transition-opacity`}>{cat}</Link>
                 ))}
               </div>
             )}
@@ -175,7 +176,7 @@ export default async function HomePage() {
                     </div>
                     <div className="md:col-span-3 flex flex-wrap gap-1.5 md:justify-end">
                       {flattenCategories(issue.categories).slice(0, 2).map((cat) => (
-                        <span key={cat} className={`category-pill ${getCategoryColor(cat)}`}>{cat}</span>
+                        <Link key={cat} href={`/topics/${categoryToSlug(cat)}`} className={`category-pill ${getCategoryColor(cat)} hover:opacity-80 transition-opacity`}>{cat}</Link>
                       ))}
                       {flattenCategories(issue.categories).length > 2 && (
                         <span className="font-mono text-[0.68rem] text-ink-faint self-center">

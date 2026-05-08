@@ -5,13 +5,17 @@ import {
   getAllSlugs,
   getIssueBySlug,
   getAllIssues,
+  getRelatedIssues,
   formatLongDate,
+  formatShortDate,
   flattenCategories,
-  issueNumber
+  issueNumber,
+  categoryToSlug
 } from '@/lib/supabase';
 import { getCategoryColor } from '@/lib/utils';
 import { sanitizeNewsletterHtml } from '@/lib/sanitize';
 import JsonLd from '@/components/JsonLd';
+import ShareButtons from '@/components/ShareButtons';
 
 export const revalidate = 60;
 
@@ -62,8 +66,9 @@ export default async function IssuePage({ params }: { params: Promise<{ slug: st
 
   if (!issue) notFound();
 
-  const number = issueNumber(allIssues, issue.slug);
   const cats = flattenCategories(issue.categories);
+  const related = await getRelatedIssues(issue.slug, cats);
+  const number = issueNumber(allIssues, issue.slug);
   const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://aihealthcarebrief.com';
   const issueUrl = `${BASE_URL}/issues/${slug}`;
 
@@ -95,18 +100,12 @@ export default async function IssuePage({ params }: { params: Promise<{ slug: st
       '@id': `${BASE_URL}/#organization`,
       name: 'AI Healthcare Brief',
       url: BASE_URL,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${BASE_URL}/logo-mark.svg`
-      }
+      logo: { '@type': 'ImageObject', url: `${BASE_URL}/logo-mark.svg` }
     },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': issueUrl
-    }
+    mainEntityOfPage: { '@type': 'WebPage', '@id': issueUrl }
   };
 
-  // Find the next/previous issue for navigation
+  // Prev / next navigation
   const sortedDesc = [...allIssues].sort(
     (a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
   );
@@ -117,6 +116,7 @@ export default async function IssuePage({ params }: { params: Promise<{ slug: st
   return (
     <article className="max-w-3xl mx-auto px-6 py-12 md:py-20 animate-fade">
       <JsonLd data={[breadcrumbSchema, articleSchema]} />
+
       {/* Back link */}
       <Link
         href="/"
@@ -132,35 +132,78 @@ export default async function IssuePage({ params }: { params: Promise<{ slug: st
             Issue №{String(number).padStart(3, '0')}
           </span>
           <span className="text-rule">·</span>
-          <span className="eyebrow text-ink-soft">
-            {formatLongDate(issue.published_at)}
-          </span>
+          <span className="eyebrow text-ink-soft">{formatLongDate(issue.published_at)}</span>
         </div>
         <h1 className="font-sans font-bold text-3xl md:text-4xl lg:text-5xl text-ink leading-tight tracking-tight">
           {issue.title}
         </h1>
         {issue.intro && (
-          <p className="mt-6 text-ink-soft text-lg md:text-xl leading-relaxed">
-            {issue.intro}
-          </p>
+          <p className="mt-6 text-ink-soft text-lg md:text-xl leading-relaxed">{issue.intro}</p>
         )}
+
+        {/* Category pills — clickable */}
         {cats.length > 0 && (
           <div className="mt-8 flex flex-wrap gap-2">
             {cats.map((cat) => (
-              <span key={cat} className={`category-pill ${getCategoryColor(cat)}`}>{cat}</span>
+              <Link
+                key={cat}
+                href={`/topics/${categoryToSlug(cat)}`}
+                className={`category-pill ${getCategoryColor(cat)} hover:opacity-80 transition-opacity`}
+              >
+                {cat}
+              </Link>
             ))}
           </div>
         )}
+
+        {/* Share buttons */}
+        <div className="mt-8">
+          <ShareButtons url={issueUrl} title={issue.title} />
+        </div>
       </header>
 
-      {/* Issue body — sanitized before render to guard against script injection */}
+      {/* Issue body */}
       <div
         className="issue-body"
         dangerouslySetInnerHTML={{ __html: sanitizeNewsletterHtml(issue.html_body) }}
       />
 
+      {/* Share again after reading */}
+      <div className="mt-14 pt-8 border-t border-rule flex items-center justify-between flex-wrap gap-4">
+        <p className="text-sm text-ink-soft">Found this useful?</p>
+        <ShareButtons url={issueUrl} title={issue.title} />
+      </div>
+
+      {/* Related issues */}
+      {related.length > 0 && (
+        <section className="mt-16">
+          <h2 className="eyebrow text-ink-faint mb-6">Related issues</h2>
+          <div className="space-y-0">
+            {related.map((rel) => (
+              <div key={rel.id} className="border-b border-rule">
+                <Link href={`/issues/${rel.slug}`} className="grid md:grid-cols-12 gap-4 py-5 group items-start">
+                  <div className="md:col-span-2">
+                    <span className="eyebrow text-ink-soft">{formatShortDate(rel.published_at)}</span>
+                  </div>
+                  <div className="md:col-span-7">
+                    <p className="font-sans font-semibold text-sm md:text-base text-ink leading-snug group-hover:text-accent transition-colors duration-300">
+                      {rel.title}
+                    </p>
+                  </div>
+                  <div className="md:col-span-3 flex flex-wrap gap-1.5 md:justify-end">
+                    {flattenCategories(rel.categories).slice(0, 2).map((cat) => (
+                      <span key={cat} className={`category-pill ${getCategoryColor(cat)}`}>{cat}</span>
+                    ))}
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Issue navigation */}
-      <nav className="mt-20 pt-10 border-t border-rule">
+      <nav className="mt-16 pt-10 border-t border-rule">
         <div className="grid grid-cols-2 gap-4">
           <div>
             {older && (

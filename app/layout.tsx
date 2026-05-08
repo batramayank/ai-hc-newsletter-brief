@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import Script from 'next/script';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
@@ -65,7 +66,10 @@ export const metadata: Metadata = {
     }
   },
   alternates: {
-    canonical: BASE_URL
+    canonical: BASE_URL,
+    types: {
+      'application/rss+xml': `${BASE_URL}/feed.xml`
+    }
   }
 };
 
@@ -99,13 +103,22 @@ const websiteSchema = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <body className="font-sans bg-paper text-ink min-h-screen flex flex-col" suppressHydrationWarning>
         <JsonLd data={[organizationSchema, websiteSchema]} />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        {plausibleDomain && (
+          <Script
+            defer
+            data-domain={plausibleDomain}
+            src="https://plausible.io/js/script.js"
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );

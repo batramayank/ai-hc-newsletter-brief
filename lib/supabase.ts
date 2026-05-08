@@ -99,3 +99,58 @@ export function flattenCategories(raw: Issue['categories']): string[] {
   if (typeof raw === 'object') return Object.keys(raw);
   return [];
 }
+
+/** Convert a category name to a URL-safe slug. e.g. "Clinical AI" → "clinical-ai" */
+export function categoryToSlug(cat: string): string {
+  return cat.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+/** Search issues by title and intro text (case-insensitive). */
+export async function searchIssues(query: string): Promise<IssueListItem[]> {
+  const safe = query.trim().slice(0, 200);
+  if (!safe) return [];
+  const { data, error } = await supabase
+    .from('issues')
+    .select('id, slug, title, intro, categories, article_count, published_at, created_at')
+    .or(`title.ilike.%${safe}%,intro.ilike.%${safe}%`)
+    .order('published_at', { ascending: false });
+  if (error) {
+    console.error('Supabase searchIssues error:', error);
+    return [];
+  }
+  return (data ?? []) as IssueListItem[];
+}
+
+/** Return all issues tagged with a given category name. */
+export async function getIssuesByCategory(category: string): Promise<IssueListItem[]> {
+  const all = await getAllIssues();
+  return all.filter((issue) => flattenCategories(issue.categories).includes(category));
+}
+
+/** Return up to `limit` other issues that share at least one category with the given issue. */
+export async function getRelatedIssues(
+  currentSlug: string,
+  categories: string[],
+  limit = 3
+): Promise<IssueListItem[]> {
+  if (categories.length === 0) return [];
+  const all = await getAllIssues();
+  return all
+    .filter((issue) => issue.slug !== currentSlug)
+    .map((issue) => ({
+      issue,
+      shared: flattenCategories(issue.categories).filter((c) => categories.includes(c)).length
+    }))
+    .filter(({ shared }) => shared > 0)
+    .sort((a, b) => b.shared - a.shared)
+    .slice(0, limit)
+    .map(({ issue }) => issue);
+}
+
+/** Return all unique category names across all issues, sorted alphabetically. */
+export async function getAllCategories(): Promise<string[]> {
+  const all = await getAllIssues();
+  const set = new Set<string>();
+  all.forEach((issue) => flattenCategories(issue.categories).forEach((c) => set.add(c)));
+  return Array.from(set).sort();
+}

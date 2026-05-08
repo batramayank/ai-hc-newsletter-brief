@@ -15,9 +15,20 @@ export default function Header() {
         <div className="max-w-5xl mx-auto px-6 py-2 flex justify-between items-center">
           <span className="eyebrow hidden sm:inline">{today}</span>
           <span className="eyebrow sm:hidden text-ink-soft">Healthcare AI Brief</span>
-          <Link href="/subscribe" className="eyebrow text-accent link-underline">
-            Subscribe →
-          </Link>
+          <div className="flex items-center gap-5">
+            <Link href="/topics" className="eyebrow text-ink-soft hover:text-accent transition-colors hidden sm:inline">
+              Topics
+            </Link>
+            <Link href="/search" aria-label="Search" className="text-ink-soft hover:text-accent transition-colors">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </Link>
+            <Link href="/subscribe" className="eyebrow text-accent link-underline">
+              Subscribe →
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -56,7 +67,7 @@ export default function Header() {
         {/* Tagline */}
         <p className="mt-5 text-sm text-ink-soft max-w-xl">
           A weekly briefing on artificial intelligence in healthcare —
-          <span className="italic"> for the people deploying it.</span>
+          <span className="italic"> for the healthcare people deploying AI.</span>
         </p>
       </div>
 
