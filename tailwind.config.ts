@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,17 +10,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: '#FFFFFF',
-        'paper-deep': '#F9FAFB',
-        ink: '#111827',
-        'ink-soft': '#6B7280',
-        'ink-faint': '#9CA3AF',
-        rule: '#E5E7EB',
-        accent: '#0D9488',
-        'accent-bright': '#0F766E',
-        'accent-glow': '#99F6E4',
-        highlight: '#F0FDFA',
-        oxblood: '#DC2626'
+        paper: 'rgb(var(--color-paper) / <alpha-value>)',
+        'paper-deep': 'rgb(var(--color-paper-deep) / <alpha-value>)',
+        ink: 'rgb(var(--color-ink) / <alpha-value>)',
+        'ink-soft': 'rgb(var(--color-ink-soft) / <alpha-value>)',
+        'ink-faint': 'rgb(var(--color-ink-faint) / <alpha-value>)',
+        rule: 'rgb(var(--color-rule) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+        'accent-bright': 'rgb(var(--color-accent-bright) / <alpha-value>)',
+        'accent-glow': 'rgb(var(--color-accent-glow) / <alpha-value>)',
+        highlight: 'rgb(var(--color-highlight) / <alpha-value>)',
+        oxblood: 'rgb(var(--color-oxblood) / <alpha-value>)',
       },
       fontFamily: {
         display: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
@@ -28,23 +29,7 @@ const config: Config = {
       },
       letterSpacing: {
         eyebrow: '0.12em'
-      },
-      typography: ({ theme }: { theme: (path: string) => string }) => ({
-        DEFAULT: {
-          css: {
-            '--tw-prose-body': theme('colors.ink'),
-            '--tw-prose-headings': theme('colors.ink'),
-            '--tw-prose-links': '#2563EB',
-            '--tw-prose-bold': theme('colors.ink'),
-            '--tw-prose-quotes': theme('colors.ink-soft'),
-            '--tw-prose-quote-borders': theme('colors.accent'),
-            '--tw-prose-hr': theme('colors.rule'),
-            maxWidth: 'none',
-            fontSize: '1.0625rem',
-            lineHeight: '1.7'
-          }
-        }
-      })
+      }
     }
   },
   plugins: [require('@tailwindcss/typography')]

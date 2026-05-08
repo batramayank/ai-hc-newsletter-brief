@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Header() {
   const today = new Date().toLocaleDateString('en-US', {
@@ -9,13 +10,13 @@ export default function Header() {
   });
 
   return (
-    <header className="border-b border-rule bg-white">
+    <header className="border-b border-rule bg-paper">
       {/* Top utility bar */}
       <div className="border-b border-rule bg-paper-deep/60">
         <div className="max-w-5xl mx-auto px-6 py-2 flex justify-between items-center">
           <span className="eyebrow hidden sm:inline">{today}</span>
           <span className="eyebrow sm:hidden text-ink-soft">Healthcare AI Brief</span>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
             <Link href="/topics" className="eyebrow text-ink-soft hover:text-accent transition-colors hidden sm:inline">
               Topics
             </Link>
@@ -25,6 +26,7 @@ export default function Header() {
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </Link>
+            <ThemeToggle />
             <Link href="/subscribe" className="eyebrow text-accent link-underline">
               Subscribe →
             </Link>
@@ -67,7 +69,7 @@ export default function Header() {
         {/* Tagline */}
         <p className="mt-5 text-sm text-ink-soft max-w-xl">
           A weekly briefing on artificial intelligence in healthcare —
-          <span className="italic"> for the healthcare people deploying AI.</span>
+          <span className="italic"> for the healthcare people and leaders deploying AI.</span>
         </p>
       </div>
 

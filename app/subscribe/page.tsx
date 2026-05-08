@@ -51,9 +51,9 @@ export default function SubscribePage() {
       {state === 'success' ? (
         /* ── Success state ── */
         <div className="py-10 text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-highlight border border-accent/20 mb-6">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-highlight border border-accent/20 mb-6 text-accent">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="#0D9488" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
               aria-hidden="true">
               <polyline points="20 6 9 17 4 12" />
             </svg>
@@ -94,7 +94,7 @@ export default function SubscribePage() {
                 placeholder="you@example.com"
                 required
                 disabled={state === 'submitting'}
-                className="flex-1 px-4 py-3 border border-rule rounded-sm text-ink placeholder-ink-faint bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-3 border border-rule rounded-sm text-ink placeholder-ink-faint bg-paper focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
@@ -116,7 +116,7 @@ export default function SubscribePage() {
             </div>
 
             {state === 'error' && (
-              <p className="mt-3 text-sm text-red-600" role="alert">{errorMsg}</p>
+              <p className="mt-3 text-sm text-red-600 dark:text-red-400" role="alert">{errorMsg}</p>
             )}
           </form>
 

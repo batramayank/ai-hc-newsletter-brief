@@ -1,19 +1,54 @@
+/* ── Theme color variables ──────────────────────────────────────────────────
+   Space-separated RGB values for Tailwind opacity modifier support (bg-paper/60).
+   Light defaults in :root; dark overrides under .dark (applied by ThemeToggle
+   or the inline anti-flash script in layout.tsx).
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  --color-paper: 255 255 255;
+  --color-paper-deep: 249 250 251;
+  --color-ink: 17 24 39;
+  --color-ink-soft: 107 114 128;
+  --color-ink-faint: 156 163 175;
+  --color-rule: 229 231 235;
+  --color-accent: 13 148 136;
+  --color-accent-bright: 15 118 110;
+  --color-accent-glow: 153 246 228;
+  --color-highlight: 240 253 250;
+  --color-oxblood: 220 38 38;
+  --color-link: 37 99 235;
+}
+
+.dark {
+  --color-paper: 17 24 39;
+  --color-paper-deep: 31 41 55;
+  --color-ink: 249 250 251;
+  --color-ink-soft: 156 163 175;
+  --color-ink-faint: 107 114 128;
+  --color-rule: 55 65 81;
+  --color-accent: 20 184 166;
+  --color-accent-bright: 13 148 136;
+  --color-accent-glow: 19 78 74;
+  --color-highlight: 2 44 34;
+  --color-oxblood: 248 113 113;
+  --color-link: 96 165 250;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    background: #FFFFFF;
-    color: #111827;
+    background: rgb(var(--color-paper));
+    color: rgb(var(--color-ink));
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
   body {
-    background: #FFFFFF;
+    background: rgb(var(--color-paper));
   }
   ::selection {
-    background: #0D9488;
+    background: rgb(var(--color-accent));
     color: #FFFFFF;
   }
 }
@@ -84,26 +119,26 @@
     @apply font-display text-xl font-semibold mt-8 mb-2 text-ink;
     line-height: 1.35;
   }
-  /* Article title links — dark, teal on hover */
+  /* Article title links — dark ink, teal on hover */
   .issue-body h3 a {
-    color: #111827 !important;
+    color: rgb(var(--color-ink)) !important;
     text-decoration: none;
-    background-image: linear-gradient(to right, #0D9488, #0D9488);
+    background-image: linear-gradient(to right, rgb(var(--color-accent)), rgb(var(--color-accent)));
     background-size: 0% 1px;
     background-repeat: no-repeat;
     background-position: 0 100%;
     transition: background-size 0.4s cubic-bezier(0.65, 0, 0.35, 1), color 0.3s;
   }
   .issue-body h3 a:hover {
-    color: #0D9488 !important;
+    color: rgb(var(--color-accent)) !important;
     background-size: 100% 1px;
   }
   .issue-body p {
     @apply my-3;
   }
-  /* All links (e.g. "Read the source →") — blue */
+  /* All links (e.g. "Read the source →") */
   .issue-body a {
-    color: #2563EB !important;
+    color: rgb(var(--color-link)) !important;
     text-decoration: none;
   }
   .issue-body a:hover {
@@ -112,7 +147,7 @@
   /* "Why it matters:" — italic teal, matching the newsletter */
   .issue-body em {
     @apply italic font-sans text-[1.0625rem] block mt-4 mb-1;
-    color: #0D9488 !important;
+    color: rgb(var(--color-accent)) !important;
     font-style: italic;
   }
   .issue-body em + br {
