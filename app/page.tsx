@@ -176,7 +176,7 @@ export default async function HomePage() {
                     </div>
                     <div className="md:col-span-3 flex flex-wrap gap-1.5 md:justify-end">
                       {flattenCategories(issue.categories).slice(0, 2).map((cat) => (
-                        <Link key={cat} href={`/topics/${categoryToSlug(cat)}`} className={`category-pill ${getCategoryColor(cat)} hover:opacity-80 transition-opacity`}>{cat}</Link>
+                        <span key={cat} className={`category-pill ${getCategoryColor(cat)}`}>{cat}</span>
                       ))}
                       {flattenCategories(issue.categories).length > 2 && (
                         <span className="font-mono text-[0.68rem] text-ink-faint self-center">

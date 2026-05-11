@@ -102,16 +102,12 @@ const websiteSchema = {
   inLanguage: 'en-US'
 };
 
-// Runs before first paint to apply dark class without flash
-const themeScript = `(function(){try{var s=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(s==='dark'||(!s&&d))document.documentElement.classList.add('dark');}catch(e){}})();`;
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
   return (
     <html lang="en" className={`${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <body className="font-sans bg-paper text-ink min-h-screen flex flex-col" suppressHydrationWarning>
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
         <JsonLd data={[organizationSchema, websiteSchema]} />
         <Header />
         <main className="flex-1">{children}</main>
